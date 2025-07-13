@@ -190,7 +190,7 @@ def post_list_by_category(request, category_slug):
 
 
 #post_list_by_category orginal code
-
+#     # Question: Why is only the header commented out? Is the function still in use?
 #def post_list_by_category(request, category_slug, page_number=1):
     
     category = get_object_or_404(Category, slug=category_slug)
