@@ -143,96 +143,8 @@ def create_post(request):
 
 
 
-# def create_post(request):
-#     categories = Category.objects.all()
-#     author_username = request.session.get('user')
-#     print(f"Session user: {author_username}")
-#     admin_user = User.objects.get(username='admin')
-    
-#     if 'user' not in request.session:
-#         return HttpResponse("You must be logged in to create a post", status=403)
-#     post = None  # Define post variable here
-
-#     if request.session['user'] == 'admin':
-#         # Admin is creating the post, so proceed with admin-specific logic
-#         pass
-#     else:
-#         # Regular user is creating the post, so proceed with user-specific logic
-#         pass
-
-#     # Rest of your code here...
-
-#     # Since you don't have a User model, we'll use the auth_name directly
-#     if request.method == 'POST':
-#         title = request.POST.get('title')
-#         content = request.POST.get('content')
-#         category_id = request.POST.get('category')
-#         print(f"Category ID: {category_id}")
-#         image = request.FILES.get('image')
-#         created_at = request.POST.get('created_at')
-
-#         try:
-#             category = Category.objects.get(id=int(category_id))
-#         except Category.DoesNotExist:
-#             return HttpResponse("Category not found", status=404)
-
-       
-#         # Create and save the Post instance
-#         post = Post(
-#             title=title,
-#             content=content,
-#             category=category,
-#             image=image,
-#             created_at=created_at,
-#             author=request.user,
-#             admin= admin_user 
-#         )
-#         post.save()
-
-#         # Add the post instance to the context dictionary
-#     context = {
-#         'post': post,
-#         'categories': categories
-#     }
 
 
-#     # Render the admin page with categories
-
-#     return render(request, 'post.html', context)
-
-
-# from django.http import FileResponse
-# import os
-
-
-# def serve_media(request, path):
-#     file_path = os.path.join(settings.MEDIA_ROOT, path)
-#     wrapper = FileResponse(open(file_path, 'rb'))
-#     response = HttpResponse(wrapper, content_type='image/jpeg')
-#     response['Content-Length'] = os.path.getsize(file_path)
-#     return response
-
-
-
-
-
-
-
-
-# def create_post(request):
-#     if request.method == 'POST':
-#         title = request.POST.get('title')
-#         content = request.POST.get('content')
-#         category_id = request.POST.get('category')
-#         image = request.FILES.get('image')
-#         # category = Category.objects.get(id=category_id)
-#         category_name = request.POST['category']
-#         category, created = Category.objects.get_or_create(name=category_name)
-#         created_at=request.POST.get('created_at')
-#         author = User.objects.get(username=request.session['user'])
-#         post = Post(author=author, title=title, content=content, category=category, image=image, created_at=created_at)
-#         post.save()
-#     return render(request,'admin_post.html',)
 import bleach
 
 
@@ -290,9 +202,6 @@ def post_list_by_category(request, category_slug):
     for post in posts:
         print('POST IMAGE', post.image.url)  # Print the image URL
         post.author_name = admin_username
-
-    # admin_username = request.session.get('user')  # Get the admin's username from the session
-    # author_username = request.user.username if request.user.is_authenticated else 'Guest'
     image_urls = [post.image.url for post in posts]
     context = {
         'posts': page_obj.object_list,  # Use page_obj.object_list instead of posts
@@ -325,24 +234,4 @@ def post_detail(request, category_slug, post_id):
         }
     return render(request, 'postdetails.html', context)
 
-
-
-# def travel_post_details(request, category_slug):
-#     category = get_object_or_404(Category, slug=category_slug)
-#     posts = Post.objects.filter(category=category)
-#     context = {
-#         'posts': posts,
-#         'category': category
-#     }
-#     return render(request, 'travel_postdetails.html', context)
-    
-
-# def post_list_by_category(request, category_name):
-#     posts = Post.objects.filter(category__name=category_name)
-#     return render(request, 'travel-post-category.html', {'posts': posts})
-
-
-# def post_detail(request, category_slug, post_slug):
-#     post = get_object_or_404(Post, category__slug=category_slug, slug=post_slug)
-#     return render(request, 'postdetails.html', {'post': post})
 

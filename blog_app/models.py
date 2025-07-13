@@ -8,7 +8,6 @@ class Category(models.Model):
     slug = models.SlugField(unique=True)
 
 class Post(models.Model):
-    # auth_name=models.CharField(max_length=200)
     title = models.CharField(max_length=255)
     content = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
